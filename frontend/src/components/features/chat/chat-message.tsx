@@ -48,9 +48,11 @@ export function ChatMessage({
       onMouseLeave={() => setIsHovering(false)}
       className={cn(
         "rounded-xl relative",
-        "flex flex-col gap-2",
-        type === "user" && " max-w-[305px] p-4 bg-tertiary self-end",
-        type === "agent" && "mt-6 max-w-full bg-transparent",
+        "flex flex-col gap-1 sm:gap-2", // Responsive gap
+        type === "user" &&
+          "max-w-[85%] sm:max-w-sm md:max-w-md lg:max-w-lg p-2 sm:p-3 md:p-4 bg-tertiary self-end", // Responsive max-width and padding for user
+        type === "agent" &&
+          "mt-3 sm:mt-4 md:mt-6 max-w-full bg-transparent", // Responsive margin for agent
       )}
     >
       <CopyToClipboardButton
@@ -59,6 +61,7 @@ export function ChatMessage({
         onClick={handleCopyToClipboard}
         mode={isCopy ? "copied" : "copy"}
       />
+      {/* Text size can be made responsive if needed e.g., text-xs sm:text-sm. For now, text-sm is kept. */}
       <div className="text-sm break-words">
         <Markdown
           components={{

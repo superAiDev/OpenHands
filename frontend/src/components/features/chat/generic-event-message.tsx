@@ -22,20 +22,21 @@ export function GenericEventMessage({
   const [showDetails, setShowDetails] = React.useState(false);
 
   return (
-    <div className="flex flex-col gap-2 border-l-2 pl-2 my-2 py-2 border-neutral-300 text-sm w-full">
+    <div className="flex flex-col gap-1 sm:gap-2 border-l-2 pl-1 sm:pl-2 my-1 sm:my-2 py-1 sm:py-2 border-neutral-300 text-sm w-full"> {/* Responsive gap, padding, margin */}
       <div className="flex items-center justify-between font-bold text-neutral-300">
-        <div>
-          {title}
+        {/* Title and toggle button container */}
+        <div className="flex items-center"> {/* Ensure title and button are aligned if title wraps */}
+          <span>{title}</span> {/* Wrap title in span for better control if needed */}
           {details && (
             <button
               type="button"
               onClick={() => setShowDetails((prev) => !prev)}
-              className="cursor-pointer text-left"
+              className="cursor-pointer text-left ml-1 sm:ml-2" // Responsive margin for button
             >
               {showDetails ? (
-                <ArrowUp className="h-4 w-4 ml-2 inline fill-neutral-300" />
+                <ArrowUp className="h-3 w-3 sm:h-4 sm:w-4 inline fill-neutral-300" /> // Responsive icon size
               ) : (
-                <ArrowDown className="h-4 w-4 ml-2 inline fill-neutral-300" />
+                <ArrowDown className="h-3 w-3 sm:h-4 sm:w-4 inline fill-neutral-300" /> // Responsive icon size
               )}
             </button>
           )}

@@ -1003,3 +1003,36 @@ def test_llm_base_url_auto_protocol_patch(mock_get):
 
     called_url = mock_get.call_args[0][0]
     assert called_url.startswith('http://') or called_url.startswith('https://')
+
+
+@patch('openhands.llm.llm.litellm_completion')
+def test_ollama_completion(mock_litellm_completion, default_config):
+    """Test that LLM class can correctly call litellm for Ollama models."""
+    ollama_config = LLMConfig(
+        model='ollama/llama2',
+        base_url='http://localhost:11434',
+        temperature=0.5,  # Added to ensure it's passed through
+    )
+
+    mock_response_content = 'This is a response from Ollama llama2.'
+    mock_litellm_completion.return_value = {
+        'choices': [{'message': {'content': mock_response_content}}]
+    }
+
+    llm = LLM(config=ollama_config)
+    response = llm.completion(
+        messages=[{'role': 'user', 'content': 'Hello Ollama!'}],
+    )
+
+    # Assert that the response is what we mocked
+    assert response['choices'][0]['message']['content'] == mock_response_content
+
+    # Assert that litellm_completion was called correctly
+    mock_litellm_completion.assert_called_once()
+    call_args = mock_litellm_completion.call_args[1]  # Get keyword arguments
+
+    assert call_args['model'] == 'ollama/llama2'
+    assert call_args['base_url'] == 'http://localhost:11434'
+    assert call_args['messages'] == [{'role': 'user', 'content': 'Hello Ollama!'}]
+    assert 'temperature' in call_args  # Check if temperature is passed
+    assert call_args['temperature'] == 0.5  # Check if temperature is passed

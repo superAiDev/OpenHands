@@ -42,8 +42,8 @@ export function ImageCarousel({
   return (
     <div data-testid="image-carousel" className="relative">
       {isScrollable && (
-        <div className="absolute right-full transform top-1/2 -translate-y-1/2">
-          <ChevronLeft active={!isAtStart} />
+        <div className="absolute right-full transform top-1/2 -translate-y-1/2 pr-1"> {/* Added pr-1 for spacing */}
+          <ChevronLeft active={!isAtStart} className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400 hover:text-neutral-200" />
         </div>
       )}
       <div
@@ -65,8 +65,8 @@ export function ImageCarousel({
         ))}
       </div>
       {isScrollable && (
-        <div className="absolute left-full transform top-1/2 -translate-y-1/2">
-          <ChevronRight active={!isAtEnd} />
+        <div className="absolute left-full transform top-1/2 -translate-y-1/2 pl-1"> {/* Added pl-1 for spacing */}
+          <ChevronRight active={!isAtEnd} className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400 hover:text-neutral-200" />
         </div>
       )}
     </div>

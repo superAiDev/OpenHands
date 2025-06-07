@@ -46,7 +46,7 @@ export function InteractiveChatBox({
   return (
     <div
       data-testid="interactive-chat-box"
-      className="flex flex-col gap-[10px]"
+      className="flex flex-col gap-2 sm:gap-[10px]" // Responsive gap
     >
       {images.length > 0 && (
         <ImageCarousel
@@ -73,8 +73,8 @@ export function InteractiveChatBox({
           onStop={onStop}
           value={value}
           onImagePaste={handleUpload}
-          className="py-[10px]"
-          buttonClassName="py-[10px]"
+          className="py-1.5 sm:py-[10px]" // Responsive padding for ChatInput text area
+          buttonClassName="py-1.5 sm:py-[10px]" // Responsive padding for ChatInput button
         />
       </div>
     </div>

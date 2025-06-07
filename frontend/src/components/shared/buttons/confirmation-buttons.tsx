@@ -15,9 +15,9 @@ export function ConfirmationButtons() {
   };
 
   return (
-    <div className="flex justify-between items-center pt-4">
-      <p>{t(I18nKey.CHAT_INTERFACE$USER_ASK_CONFIRMATION)}</p>
-      <div className="flex items-center gap-3">
+    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pt-2 sm:pt-4 gap-2 sm:gap-0"> {/* Stack on xs, row on sm+; responsive padding; gap for stacked layout */}
+      <p className="text-sm">{t(I18nKey.CHAT_INTERFACE$USER_ASK_CONFIRMATION)}</p> {/* Ensure text size consistency */}
+      <div className="flex items-center gap-2 sm:gap-3 self-end sm:self-center"> {/* Responsive gap; adjust alignment for stacked vs row */}
         <ActionTooltip
           type="confirm"
           onClick={() => handleStateChange(AgentState.USER_CONFIRMED)}

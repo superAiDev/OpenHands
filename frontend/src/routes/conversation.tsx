@@ -99,38 +99,37 @@ function AppContent() {
   function renderMain() {
     const basePath = `/conversations/${conversationId}`;
 
-    if (width <= 640) {
-      return (
-        <div className="rounded-xl overflow-hidden border border-neutral-600 w-full bg-base-secondary">
-          <ChatInterface />
-        </div>
-      );
-    }
-    return (
-      <ResizablePanel
-        orientation={Orientation.HORIZONTAL}
-        className="grow h-full min-h-0 min-w-0"
-        initialSize={500}
-        firstClassName="rounded-xl overflow-hidden border border-neutral-600 bg-base-secondary"
-        secondClassName="flex flex-col overflow-hidden"
-        firstChild={<ChatInterface />}
-        secondChild={
-          <Container
-            className="h-full w-full"
-            labels={[
-              {
-                label: "Changes",
+    // Always render ChatInterface, its visibility or stacking order will be handled by Tailwind
+    const chatInterfaceElement = (
+      <div
+        // On medium screens and up, this will be the first child of ResizablePanel
+        // On small screens, this could take full width or be part of a flex-col layout
+        className="rounded-xl overflow-hidden border border-neutral-600 bg-base-secondary md:h-full h-1/2" // Example: half height on small screens
+      >
+        <ChatInterface />
+      </div>
+    );
+
+    const tabContainerElement = (
+      <Container
+        // On medium screens and up, this will be the second child of ResizablePanel
+        // On small screens, this could take full width or be part of a flex-col layout
+        className="h-full w-full md:h-full h-1/2" // Example: half height on small screens
+        labels={[
+          {
+            label: "Changes",
+                label: <span className="hidden sm:inline">Changes</span>, // Text hidden on very small screens
                 to: "",
-                icon: <DiGit className="w-6 h-6" />,
+                icon: <DiGit className="w-5 h-5 sm:w-6 sm:h-6" />, // Smaller icon on xs
               },
               {
                 label: (
                   <div className="flex items-center gap-1">
-                    {t(I18nKey.VSCODE$TITLE)}
+                    <span className="hidden sm:inline">{t(I18nKey.VSCODE$TITLE)}</span>
                   </div>
                 ),
                 to: "vscode",
-                icon: <VscCode className="w-5 h-5" />,
+                icon: <VscCode className="w-4 h-4 sm:w-5 sm:h-5" />,
                 rightContent: !RUNTIME_INACTIVE_STATES.includes(
                   curAgentState,
                 ) ? (
@@ -162,41 +161,64 @@ function AppContent() {
               {
                 label: t(I18nKey.WORKSPACE$TERMINAL_TAB_LABEL),
                 to: "terminal",
-                icon: <TerminalIcon />,
+                icon: <TerminalIcon className="w-5 h-5 sm:w-6 sm:h-6" />,
               },
-              { label: "Jupyter", to: "jupyter", icon: <JupyterIcon /> },
               {
-                label: <ServedAppLabel />,
+                label: <span className="hidden sm:inline">Jupyter</span>,
+                to: "jupyter",
+                icon: <JupyterIcon className="w-5 h-5 sm:w-6 sm:h-6" />,
+              },
+              {
+                label: <ServedAppLabel smallScreen={width <= 640} />, // Pass screen size info if needed, or adapt ServedAppLabel internally
                 to: "served",
-                icon: <FaServer />,
+                icon: <FaServer className="w-5 h-5 sm:w-6 sm:h-6" />,
               },
               {
                 label: (
                   <div className="flex items-center gap-1">
-                    {t(I18nKey.BROWSER$TITLE)}
+                    <span className="hidden sm:inline">{t(I18nKey.BROWSER$TITLE)}</span>
                   </div>
                 ),
                 to: "browser",
-                icon: <GlobeIcon />,
+                icon: <GlobeIcon className="w-5 h-5 sm:w-6 sm:h-6" />,
               },
             ]}
           >
-            {/* Use both Outlet and TabContent */}
             <div className="h-full w-full">
               <TabContent conversationPath={basePath} />
             </div>
           </Container>
-        }
-      />
+    );
+
+    return (
+      <>
+        {/* Small screens: Stack chat and tabs vertically */}
+        <div className="md:hidden flex flex-col h-full w-full gap-3">
+          {chatInterfaceElement}
+          {tabContainerElement}
+        </div>
+
+        {/* Medium screens and up: Resizable panel */}
+        <ResizablePanel
+          orientation={Orientation.HORIZONTAL}
+          className="hidden md:flex grow h-full min-h-0 min-w-0" // Use md:flex to show only on md and up
+          initialSize={width > 1024 ? 500 : Math.max(300, width * 0.4)} // Adjust initial size based on width
+          firstClassName="rounded-xl overflow-hidden border border-neutral-600 bg-base-secondary"
+          secondClassName="flex flex-col overflow-hidden"
+          firstChild={chatInterfaceElement} // Re-use the chat interface element
+          secondChild={tabContainerElement} // Re-use the tab container element
+        />
+      </>
     );
   }
 
   return (
     <WsClientProvider conversationId={conversationId}>
       <EventHandler>
-        <div data-testid="app-route" className="flex flex-col h-full gap-3">
-          <div className="flex h-full overflow-auto">{renderMain()}</div>
-
+        <div data-testid="app-route" className="flex flex-col h-full gap-2 sm:gap-3"> {/* Smaller gap on xs */}
+          <div className="flex flex-col md:flex-row h-full overflow-auto grow"> {/* Allow grow for ResizablePanel */}
+            {renderMain()}
+          </div>
           <Controls
             setSecurityOpen={onSecurityModalOpen}
             showSecurityLock={!!settings?.SECURITY_ANALYZER}

@@ -34,7 +34,6 @@ class LLMConfig(BaseModel):
         max_output_tokens: The maximum number of output tokens. This is sent to the LLM.
         input_cost_per_token: The cost per input token. This will available in logs for the user to check.
         output_cost_per_token: The cost per output token. This will available in logs for the user to check.
-        ollama_base_url: The base URL for the OLLAMA API.
         drop_params: Drop any unmapped (unsupported) params without causing an exception.
         modify_params: Modify params allows litellm to do transformations like adding a default message, when a message is empty.
         disable_vision: If model is vision capable, this option allows to disable image processing (useful for cost reduction).
@@ -73,7 +72,6 @@ class LLMConfig(BaseModel):
     max_output_tokens: int | None = Field(default=None)
     input_cost_per_token: float | None = Field(default=None)
     output_cost_per_token: float | None = Field(default=None)
-    ollama_base_url: str | None = Field(default=None)
     # This setting can be sent in each call to litellm
     drop_params: bool = Field(default=True)
     # Note: this setting is actually global, unlike drop_params

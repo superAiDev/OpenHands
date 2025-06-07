@@ -15,9 +15,9 @@ export function StopButton({ isDisabled, onClick }: StopButtonProps) {
       disabled={isDisabled}
       onClick={onClick}
       type="button"
-      className="border border-white rounded-lg w-6 h-6 hover:bg-neutral-500 focus:bg-neutral-500 flex items-center justify-center"
+      className="border border-white rounded-lg w-5 h-5 sm:w-6 sm:h-6 hover:bg-neutral-500 focus:bg-neutral-500 flex items-center justify-center" // Responsive button size
     >
-      <div className="w-[10px] h-[10px] bg-white" />
+      <div className="w-[8px] h-[8px] sm:w-[10px] sm:h-[10px] bg-white" /> {/* Responsive icon size */}
     </button>
   );
 }

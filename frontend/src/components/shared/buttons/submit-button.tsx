@@ -15,9 +15,9 @@ export function SubmitButton({ isDisabled, onClick }: SubmitButtonProps) {
       disabled={isDisabled}
       onClick={onClick}
       type="submit"
-      className="border border-white rounded-lg w-6 h-6 hover:bg-neutral-500 focus:bg-neutral-500 flex items-center justify-center"
+      className="border border-white rounded-lg w-5 h-5 sm:w-6 sm:h-6 hover:bg-neutral-500 focus:bg-neutral-500 flex items-center justify-center" // Responsive width and height
     >
-      <ArrowSendIcon />
+      <ArrowSendIcon className="w-3 h-3 sm:w-4 sm:h-4" /> {/* Assuming ArrowSendIcon can take className for size */}
     </button>
   );
 }

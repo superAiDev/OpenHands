@@ -23,18 +23,18 @@ export function ErrorMessage({ errorId, defaultMessage }: ErrorMessageProps) {
     : "CHAT_INTERFACE$AGENT_ERROR_MESSAGE";
 
   return (
-    <div className="flex flex-col gap-2 border-l-2 pl-2 my-2 py-2 border-danger text-sm w-full">
-      <div className="font-bold text-danger">
-        {t(errorKey)}
+    <div className="flex flex-col gap-1 sm:gap-2 border-l-2 pl-1 sm:pl-2 my-1 sm:my-2 py-1 sm:py-2 border-danger text-sm w-full"> {/* Responsive gap, padding, margin */}
+      <div className="font-bold text-danger flex items-center"> {/* Added flex items-center for alignment */}
+        <span>{t(errorKey)}</span> {/* Wrapped text in span */}
         <button
           type="button"
           onClick={() => setShowDetails((prev) => !prev)}
-          className="cursor-pointer text-left"
+          className="cursor-pointer text-left ml-1 sm:ml-2" // Responsive margin
         >
           {showDetails ? (
-            <ArrowUp className="h-4 w-4 ml-2 inline fill-danger" />
+            <ArrowUp className="h-3 w-3 sm:h-4 sm:w-4 inline fill-danger" /> {/* Responsive icon size */}
           ) : (
-            <ArrowDown className="h-4 w-4 ml-2 inline fill-danger" />
+            <ArrowDown className="h-3 w-3 sm:h-4 sm:w-4 inline fill-danger" /> {/* Responsive icon size */}
           )}
         </button>
       </div>

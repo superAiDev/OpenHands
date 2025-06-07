@@ -1,21 +1,18 @@
+import { cn } from "#/utils/utils"; // Import cn utility
+
 interface ChevronRightProps {
-  width?: number;
-  height?: number;
   active?: boolean;
+  className?: string; // Add className prop
 }
 
-export function ChevronRight({
-  width = 20,
-  height = 20,
-  active,
-}: ChevronRightProps) {
+export function ChevronRight({ active, className }: ChevronRightProps) {
+  const defaultClasses = "w-5 h-5"; // Default size (20x20px)
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 20 20`} // Keep viewBox consistent if path is designed for it
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(defaultClasses, className)} // Apply className
     >
       <path
         fillRule="evenodd"

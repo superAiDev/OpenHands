@@ -24,16 +24,16 @@ export function MCPObservationContent({ event }: MCPObservationContentProps) {
     event.extras.arguments && Object.keys(event.extras.arguments).length > 0;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 sm:gap-4"> {/* Responsive outer gap */}
       {/* Arguments section */}
       {hasArguments && (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1 sm:gap-2"> {/* Responsive inner gap */}
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-gray-300">
+            <h3 className="text-xs sm:text-sm font-semibold text-gray-300"> {/* Responsive text size */}
               {t("MCP_OBSERVATION$ARGUMENTS")}
             </h3>
           </div>
-          <div className="p-3 bg-gray-900 rounded-md overflow-auto text-gray-300 max-h-[200px] shadow-inner">
+          <div className="p-1.5 sm:p-2 md:p-3 bg-gray-900 rounded-md overflow-auto text-gray-300 max-h-[200px] shadow-inner"> {/* Responsive padding */}
             <ReactJsonView
               name={false}
               src={event.extras.arguments}
@@ -46,13 +46,13 @@ export function MCPObservationContent({ event }: MCPObservationContentProps) {
       )}
 
       {/* Output section */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1 sm:gap-2"> {/* Responsive inner gap */}
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-gray-300">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-300"> {/* Responsive text size */}
             {t("MCP_OBSERVATION$OUTPUT")}
           </h3>
         </div>
-        <div className="p-3 bg-gray-900 rounded-md overflow-auto text-gray-300 max-h-[300px] shadow-inner">
+        <div className="p-1.5 sm:p-2 md:p-3 bg-gray-900 rounded-md overflow-auto text-gray-300 max-h-[300px] shadow-inner"> {/* Responsive padding */}
           {typeof outputData === "object" && outputData !== null ? (
             <ReactJsonView
               name={false}

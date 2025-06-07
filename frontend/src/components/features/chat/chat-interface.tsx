@@ -135,7 +135,7 @@ export function ChatInterface() {
       <div
         ref={scrollRef}
         onScroll={(e) => onChatBodyScroll(e.currentTarget)}
-        className="scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-thumb-rounded-full scrollbar-track-gray-800 hover:scrollbar-thumb-gray-300 flex flex-col grow overflow-y-auto overflow-x-hidden px-4 pt-4 gap-2 fast-smooth-scroll"
+        className="scrollbar scrollbar-thin scrollbar-thumb-gray-400 scrollbar-thumb-rounded-full scrollbar-track-gray-800 hover:scrollbar-thumb-gray-300 flex flex-col grow overflow-y-auto overflow-x-hidden px-2 sm:px-4 pt-2 sm:pt-4 gap-1 sm:gap-2 fast-smooth-scroll" // Adjusted padding and gap
       >
         {isLoadingMessages && (
           <div className="flex justify-center">
@@ -161,7 +161,7 @@ export function ChatInterface() {
           )}
       </div>
 
-      <div className="flex flex-col gap-[6px] px-4 pb-4">
+      <div className="flex flex-col gap-1 sm:gap-[6px] px-2 sm:px-4 pb-2 sm:pb-4"> {/* Adjusted padding and gap */}
         <div className="flex justify-between relative">
           <TrajectoryActions
             onPositiveFeedback={() =>

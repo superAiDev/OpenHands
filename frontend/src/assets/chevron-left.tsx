@@ -1,21 +1,27 @@
+import { cn } from "#/utils/utils"; // Import cn utility
+
 interface ChevronLeftProps {
-  width?: number;
-  height?: number;
   active?: boolean;
+  className?: string; // Add className prop
 }
 
-export function ChevronLeft({
-  width = 20,
-  height = 20,
-  active,
-}: ChevronLeftProps) {
+export function ChevronLeft({ active, className }: ChevronLeftProps) {
+  const defaultClasses = "w-5 h-5"; // Default size (20x20px)
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      // Remove width, height, and viewBox from here if solely relying on Tailwind from className
+      // Or, keep viewBox if the SVG path coordinates depend on it and scale it,
+      // but typical Tailwind usage for SVGs often omits width/height for `fill: currentColor` icons.
+      // For this SVG, viewBox is important due to path coordinates. Let's keep it dynamic for now,
+      // assuming the parent will provide a className that defines width/height.
+      // If className doesn't provide w/h, it might not render as expected or take a default.
+      // A robust approach would be to have width/height props AND className for overrides or Tailwind sizing.
+      // For now, let's assume className will provide w/h and keep viewBox fixed or make it scale.
+      // The original viewBox implies path coords are for a 20x20 box.
+      viewBox={`0 0 20 20`} // Keep viewBox consistent if path is designed for it
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={cn(defaultClasses, className)} // Apply className
     >
       <path
         fillRule="evenodd"
